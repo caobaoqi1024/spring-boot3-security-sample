@@ -1,6 +1,7 @@
 package dev.mcdd.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -40,8 +41,9 @@ public class WebSecurityConfig {
     @Bean
     public RequestMatcher publicEndPointMatcher() {
         return new OrRequestMatcher(
+                PathRequest.toH2Console(),
+                PathRequest.toStaticResources().atCommonLocations(),
                 new AntPathRequestMatcher("/users/**"),
-                new AntPathRequestMatcher("/h2-console/**"),
                 new AntPathRequestMatcher("/auth/sign-in", HttpMethod.POST.name()),
                 new AntPathRequestMatcher("/auth/sign-up", HttpMethod.POST.name()),
                 new AntPathRequestMatcher("/v3/api-docs/**", HttpMethod.GET.name()),
@@ -68,6 +70,7 @@ public class WebSecurityConfig {
                         .accessDeniedHandler(restfulAuthenticationEntryPointHandler)
                         .authenticationEntryPoint(restfulAuthenticationEntryPointHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.h2-web-console.spring-security
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }

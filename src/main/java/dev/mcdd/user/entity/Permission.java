@@ -16,9 +16,7 @@ import java.io.Serializable;
 @TableName("`permission`")
 public class Permission implements Serializable {
 
-	@TableField("id")
 	private Long id;
-	@TableField("code")
 	private String code;
 	@TableField("name")
 	private String name;
