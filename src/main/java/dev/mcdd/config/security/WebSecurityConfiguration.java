@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,7 +33,7 @@ public class WebSecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
@@ -44,12 +45,12 @@ public class WebSecurityConfiguration {
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.builder()
                 .username("user")
-                .password("$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi")
+                .password("{bcrypt}$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi")
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
                 .username("admin")
-                .password("$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi")
+                .password("{bcrypt}$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi")
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
@@ -67,7 +68,7 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource));
-        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(AbstractHttpConfigurer::disable);
         http.sessionManagement(Customizer.withDefaults());
         http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         http.authorizeHttpRequests(authorize -> authorize
@@ -84,5 +85,4 @@ public class WebSecurityConfiguration {
 
         return http.build();
     }
-
 }
