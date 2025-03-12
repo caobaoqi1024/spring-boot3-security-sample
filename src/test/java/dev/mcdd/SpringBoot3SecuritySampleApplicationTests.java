@@ -14,7 +14,7 @@ class SpringBoot3SecuritySampleApplicationTests {
     void contextLoads() {
         String encode = passwordEncoder.encode("123321");
         System.out.println("encode = " + encode);
-        boolean matches = passwordEncoder.matches("123321", "$2a$10$7zfEdqQYJrBnmDdu7UkgS.zOAsJf4bB1ZYrVhCBAIvIoPbEmeVnVe");
+        boolean matches = passwordEncoder.matches("123321", "$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi");
         System.out.println("matches = " + matches);
     }
 

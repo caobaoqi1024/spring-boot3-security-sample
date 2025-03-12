@@ -1,6 +1,6 @@
 INSERT INTO `user` (username, email, password)
-VALUES ('admin', 'admin1024@gmail.com', '$2a$10$RVVtn/6vJHotWZRcJIjMNec5CN6uHYtVsCkP.9DwdpfGclxVO7jAu'),
-       ('general', 'general1024@gmail.com', '$2a$10$RVVtn/6vJHotWZRcJIjMNec5CN6uHYtVsCkP.9DwdpfGclxVO7jAu');
+VALUES ('admin', 'admin1024@gmail.com', '$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi'),
+       ('general', 'general1024@gmail.com', '$2a$10$VdHsVghA6.G7iXoIZ8BOjOTx8yYvHJeE9FbKXljLIdzMQIAEiSBfi');
 
 INSERT INTO `role` (code)
 VALUES ('ADMIN'),
